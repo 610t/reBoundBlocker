@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 #MIT License
 #
 #Copyright (c) 2018 Switch Science
@@ -37,17 +39,10 @@ digH = []
 t_fine = 0.0
 
 
-def writeReg(reg_address, data):
-	bus.write_byte_data(i2c_address,reg_address,data)
-
 def get_calib_param():
 	calib = []
 	
-	for i in range (0x88,0x88+24):
-		calib.append(bus.read_byte_data(i2c_address,i))
-	calib.append(bus.read_byte_data(i2c_address,0xA1))
-	for i in range (0xE1,0xE1+7):
-		calib.append(bus.read_byte_data(i2c_address,i))
+	calib=bus.read_i2c_block_data(i2c_address,0x88,24)
 
 	digT.append((calib[1] << 8) | calib[0])
 	digT.append((calib[3] << 8) | calib[2])
@@ -61,12 +56,18 @@ def get_calib_param():
 	digP.append((calib[19]<< 8) | calib[18])
 	digP.append((calib[21]<< 8) | calib[20])
 	digP.append((calib[23]<< 8) | calib[22])
-	digH.append( calib[24] )
-	digH.append((calib[26]<< 8) | calib[25])
-	digH.append( calib[27] )
-	digH.append((calib[28]<< 4) | (0x0F & calib[29]))
-	digH.append((calib[30]<< 4) | ((calib[29] >> 4) & 0x0F))
-	digH.append( calib[31] )
+
+	calib=bus.read_i2c_block_data(i2c_address,0xA1,1)
+
+	digH.append(calib[0])
+
+	calib=bus.read_i2c_block_data(i2c_address,0xE1,7)
+
+	digH.append((calib[1]<< 8) | calib[0])
+	digH.append( calib[2] )
+	digH.append((calib[3]<< 4) | (0x0F & calib[4]))
+	digH.append((calib[5]<< 4) | ((calib[4] >> 4) & 0x0F))
+	digH.append( calib[6] )
 	
 	for i in range(1,2):
 		if digT[i] & 0x8000:
@@ -82,8 +83,7 @@ def get_calib_param():
 
 def readData():
 	data = []
-	for i in range (0xF7, 0xF7+8):
-		data.append(bus.read_byte_data(i2c_address,i))
+	data=bus.read_i2c_block_data(i2c_address,0xF7,8)
 	pres_raw = (data[0] << 12) | (data[1] << 4) | (data[2] >> 4)
 	temp_raw = (data[3] << 12) | (data[4] << 4) | (data[5] >> 4)
 	hum_raw  = (data[6] << 8)  |  data[7]
@@ -152,9 +152,9 @@ def setup():
 	config_reg    = (t_sb << 5) | (filter << 2) | spi3w_en
 	ctrl_hum_reg  = osrs_h
 
-	writeReg(0xF2,ctrl_hum_reg)
-	writeReg(0xF4,ctrl_meas_reg)
-	writeReg(0xF5,config_reg)
+	bus.write_byte_data(i2c_address,0xF2,ctrl_hum_reg)
+	bus.write_byte_data(i2c_address,0xF4,ctrl_meas_reg)
+	bus.write_byte_data(i2c_address,0xF5,config_reg)
 
 
 setup()
