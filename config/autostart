@@ -1,7 +1,8 @@
 /home/pi/reBoundBlocker/bin/osd_sensors.sh 2>&1 > /dev/null &
 /home/pi/reBoundBlocker/bin/osd_steps.sh 2>&1 > /dev/null &
-xset s off
-xset -dpms
+xset s off -dpms
+chromium-browser --noerrdialogs --disable-infobars --disable-background-mode --kiosk --app=https://youtube.com/ 2>&1 > /dev/null &
+/usr/bin/unclutter -idle 2 -jitter 3 2>&1 > /dev/null &
 @lxpanel --profile LXDE-pi
 @pcmanfm --desktop --profile LXDE-pi
 #@xscreensaver -no-splash
