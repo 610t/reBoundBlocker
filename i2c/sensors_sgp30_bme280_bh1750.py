@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import smbus
 import time
 import subprocess
@@ -15,11 +16,13 @@ i2c.write_byte_data(addr, 0x20, 0x03)
 time.sleep(0.01)
 #time.sleep(15)
 
+path=os.path.dirname(__file__)
+
 while True:
   ## BH1750
-  proc_bh1750=subprocess.run("/home/pi/reBoundBlocker/i2c/bh1750.py",shell=True,stdout=PIPE,text=True)
+  proc_bh1750=subprocess.run(path+"/bh1750.py",shell=True,stdout=PIPE,text=True)
   ## BME280
-  proc_bme280=subprocess.run("/home/pi/reBoundBlocker/i2c/bme280.py",shell=True,stdout=PIPE,text=True)
+  proc_bme280=subprocess.run(path+"/bme280.py",shell=True,stdout=PIPE,text=True)
   ## SGP30
   i2c.write_byte_data(addr, 0x20, 0x08)
   time.sleep(0.01)
