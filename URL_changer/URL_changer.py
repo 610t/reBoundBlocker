@@ -23,7 +23,11 @@ output_file=path+"/iframe.html"
 ### Get movie duration from script ../YouTube/youtube_duration.py.
 # Please see a code at RasPiCon2018 at ~/pychromecast/examples/my_youtube.py.
 duration=int(subprocess.check_output(path+"/../YouTube/youtube_duration.py --id "+movie_list[v], shell=True))
-duration=int((duration+10)*1.1)
+# The constant 5 seconds means the video playback start time.
+duration=int((duration+5)*1.1)
+
+print("Movie ID:"+movie_list[v])
+print("Duration:"+str(duration))
 
 with open(tmpl_file) as f_tmpl:
   tmpl=f_tmpl.read()
