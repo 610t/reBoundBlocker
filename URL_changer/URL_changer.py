@@ -4,19 +4,22 @@ import time
 import random
 import subprocess
 
-movie_list=[
-	'CFy-CTQKGVk',
-	'14XXTNr8bvk',
-	'FYaJ7QR_N-g',
-	'Vk8FoH25KJg',
-	'',
-	]
+path=os.path.dirname(__file__)
+
+movie_list=[]
+
+video_file="video_list.txt"
+with open(path+"/"+video_file) as vf:
+  for l in vf:
+    l=l.strip()
+    # Skip line start from '#' as a comment.
+    if l.find("#") != 0:
+      movie_list.append(l)
 
 # Set video randomly.
-v=random.randint(0,len(movie_list)-2)
+v=random.randint(0,len(movie_list)-1)
 url="https://www.youtube.com/embed/"+movie_list[v]
 
-path=os.path.dirname(__file__)
 tmpl_file=path+"/iframe.html.tmpl"
 output_file=path+"/iframe.html"
 
