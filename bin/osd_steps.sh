@@ -3,7 +3,8 @@ export DISPLAY=:0
 MY_PATH=`dirname $0`
 while true
 do
-  ${MY_PATH}/../BLE/Get_from_M5Walker.py
+  sudo ${MY_PATH}/../BLE/Get_from_M5Walker.py
+  sleep 10
 done | \
 osd_cat --align right \
   --pos bottom \
