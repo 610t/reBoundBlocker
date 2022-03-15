@@ -122,7 +122,7 @@ def compensate_T(adc_T):
 	v2 = (adc_T / 131072.0 - digT[0] / 8192.0) * (adc_T / 131072.0 - digT[0] / 8192.0) * digT[2]
 	t_fine = v1 + v2
 	temperature = t_fine / 5120.0
-	print("temp : %-6.2f ℃" % (temperature))
+	print("temp : %-6.2f deg" % (temperature))
 
 def compensate_H(adc_H):
 	global t_fine
@@ -136,7 +136,7 @@ def compensate_H(adc_H):
 		var_h = 100.0
 	elif var_h < 0.0:
 		var_h = 0.0
-	print("hum : %6.2f ％" % (var_h))
+	print("hum : %6.2f %%" % (var_h))
 
 
 def setup():
