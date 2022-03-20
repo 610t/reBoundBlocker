@@ -13,7 +13,7 @@ DEVELOPER_KEY = "MY_DEVELOPER_KEY"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
-def youtube_saerch_video(options):
+def youtube_search_video(options):
   youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
     developerKey=DEVELOPER_KEY)
 
@@ -47,6 +47,6 @@ if __name__ == "__main__":
   args = argparser.parse_args()
 
   try:
-    youtube_saerch_video(args)
+    youtube_search_video(args)
   except HttpError as e:
     print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
