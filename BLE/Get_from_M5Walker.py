@@ -57,7 +57,7 @@ class ScanDelegate(DefaultDelegate):
                             DBG("Time:", self.lasttime)
                             DBG("Value:",value[6:10],bytes.fromhex(value[6:10]))
                             step = struct.unpack('<h', bytes.fromhex(value[6:10]))[0]
-                            print("Step:", step, "+", total_step)
+                            print("Step:", str(step+total_step))
                             sys.stdout.flush()
                             last_step = step
 
