@@ -23,14 +23,14 @@ void draw(cairo_t *c, int width, int height)
     cairo_set_source_rgb(c, 1, 0, 0);
     cairo_move_to(c, 0, 0);
     cairo_line_to(c, 0, height);
-    cairo_line_to(c, width/2, height / 2);
+    cairo_line_to(c, width / 2, height / 2);
     cairo_line_to(c, 0, 0);
     cairo_fill(c);
     cairo_set_source_rgb(c, 1, 0, 0);
-    cairo_move_to(c, width/2, 0);
-    cairo_line_to(c, width/2, height);
+    cairo_move_to(c, width / 2, 0);
+    cairo_line_to(c, width / 2, height);
     cairo_line_to(c, width, height / 2);
-    cairo_line_to(c, width/2, 0);
+    cairo_line_to(c, width / 2, 0);
     cairo_fill(c);
 }
 
@@ -50,12 +50,12 @@ int main()
     // Application window width & height is 1/3 of root window's it.
     // And window shows at top right corner.
     XGetWindowAttributes(d, root, &attr);
-    root_width=attr.width;
-    root_height=attr.height;
-    width=root_width/3;
-    height=root_height/3;
-    xoffset=root_width-width;
-    yoffset=0;
+    root_width = attr.width;
+    root_height = attr.height;
+    width = root_width / 3;
+    height = root_height / 3;
+    xoffset = root_width - width;
+    yoffset = 0;
 
     // override_redirect means the window manager ignore this window.
     XSetWindowAttributes attrs;
