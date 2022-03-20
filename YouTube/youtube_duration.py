@@ -18,7 +18,7 @@ def youtube_saerch_video(options):
     developerKey=DEVELOPER_KEY)
 
   videos_response = youtube.videos().list(
-    part="contentDetails",
+    part="contentDetails,status",
     id=options.id
   ).execute()
 
@@ -26,6 +26,11 @@ def youtube_saerch_video(options):
 
   for result in videos_response.get("items", []):
     duration = result["contentDetails"]["duration"]
+    # This video is embeddable?
+    embeddable = result["status"]["embeddable"]
+    if not embeddable:
+      print(-1)
+      exit()
     pattern = r'PT(?:(?P<hours>\d+)H)?((?P<minutes>\d+)M)?(?P<seconds>\d+)S'
     match = re.match(pattern, duration)
 
